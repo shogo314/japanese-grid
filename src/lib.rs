@@ -3,7 +3,7 @@ pub use base::*;
 
 #[cfg(test)]
 mod tests {
-    use crate::GeoCoordinate;
+    use crate::*;
 
     #[test]
     fn it_works() {
@@ -31,5 +31,12 @@ mod tests {
 
         let mesh_code = coord_from_decimicro.to_second_mesh();
         assert_eq!(mesh_code, "493015");
+
+        let result = from_second_mesh_code("493015").unwrap();
+        assert_eq!(result.0.to_string(), "Lat: 32.7500000, Lon: 130.6250000");
+        assert_eq!(result.1.to_string(), "Lat: 32.8333333, Lon: 130.7500000");
+
+        const CO: GeoCoordinate = GeoCoordinate::new_from_decimicro_const(327_903_862, 1_306_883_252);
+        assert_eq!(CO.lat_decimicro(), 327_903_862);
     }
 }
